@@ -1,0 +1,47 @@
+<?php
+$page_title = isset($page_title) ? $page_title : "";
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+<nav class="navbar sticky-top navbar-expand-md navbar-dark"
+     style="background-color: #569f32;">
+    <a class="navbar-brand" href="<?= dirname($_SERVER['PHP_SELF']) ?>">
+        <?= P_INDEX_PAGE ?>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link
+                <?= $page_title == P_INDEX_PAGE ? ' active' : '' ?>"
+               href="<?= dirname($_SERVER['PHP_SELF']) ?>">Home</a>
+
+            <?php if (isset($_SESSION['user_access_privileges'])
+                  && $_SESSION['user_access_privileges'] == 'admin'): ?>
+                <a class="nav-item nav-link
+                    <?= $page_title == P_ADD_PROFILE_PAGE ? ' active' : '' ?>"
+                   href="addprofile.php">Add a Profile</a>
+            <?php endif; ?>
+
+            <?php if (!isset($_SESSION['user_name'])): ?>
+                <a class="nav-item nav-link
+                    <?= $page_title == P_LOGIN_PAGE ? ' active' : '' ?>"
+                   href="login.php">Login</a>
+                <a class="nav-item nav-link
+                    <?= $page_title == P_SIGNUP_PAGE ? ' active' : '' ?>"
+                   href="addprofile.php">Sign Up</a>
+            <?php else: ?>
+                <a class="nav-item nav-link
+                    <?= $page_title == P_ADD_EXERCISE_PAGE ? ' active' : '' ?>"
+                   href="addexercise.php">Log Exercise</a>
+                <a class="nav-item nav-link"
+                   href="logout.php">Logout (<?= $_SESSION['user_name'] ?>)</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
